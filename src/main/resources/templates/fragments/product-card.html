@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="productCard(product)">
+    <div class="product-card" th:if="${product != null}">
+        <div class="product-thumb">
+            <img class="product-image"
+                 alt="Ảnh sản phẩm"
+                 th:src="${(product.imageUrl != null && !#strings.isEmpty(product.imageUrl)) ? product.imageUrl : 'https://www.figma.com/api/mcp/asset/83ceb6e6-126a-4dc0-a2a4-53268dfee6fd'}" />
+
+            <div class="discount-badge"
+                 th:if="${product.isDiscounted == true}"
+                 th:text="${'-' + product.discountPercent + '%'}">-0%</div>
+        </div>
+
+        <div class="product-info">
+            <h3 class="product-name" th:text="${product.name}">Product Name</h3>
+
+            <div>
+                <div class="product-old-price"
+                     th:if="${product.isDiscounted == true}"
+                     th:text="${product.price + ' VND'}">0 VND</div>
+                <div class="product-price"
+                     th:if="${product.isDiscounted == true}"
+                     th:text="${product.finalPrice + ' VND'}">0 VND</div>
+                <div class="product-price"
+                     th:if="${product.isDiscounted != true}"
+                     th:text="${product.price + ' VND'}">0 VND</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

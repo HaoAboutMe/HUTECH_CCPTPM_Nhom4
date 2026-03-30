@@ -560,7 +560,13 @@
                     <img alt="" src="https://www.figma.com/api/mcp/asset/c969583c-56f6-4b7a-ae29-c6078652ffc5" />
                     <span th:text="${product.quantity}">0</span>
                 </div>
-                <div class="price" th:text="${product.price} + ' VND'">0 VND</div>
+                <div class="price">
+                    <div th:if="${product.isDiscounted}" style="display:flex; flex-direction:column; gap:2px;">
+                        <span th:text="${product.finalPrice + ' VND'}">0 VND</span>
+                        <span style="color:#9b9696; font-size:12px; text-decoration:line-through;" th:text="${product.price + ' VND'}">0 VND</span>
+                    </div>
+                    <span th:if="${!product.isDiscounted}" th:text="${product.price + ' VND'}">0 VND</span>
+                </div>
                 <div class="actions">
                     <a class="action-btn" th:href="@{/products/{id}/edit(id=${product.id})}">Sửa</a>
                     <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post">
