@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý sản phẩm</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f6f6f6;
+            --card: #ffffff;
+            --border: #d9d9d9;
+            --muted: #7c7575;
+            --text: #1f1f1f;
+            --accent: #fde047;
+            --accent-dark: #a47a07;
+            --sidebar: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Cabin", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 429px;
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            padding: 24px 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: #f3b11b;
+        }
+
+        .brand img {
+            width: 42px;
+            height: 42px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #9c9c9c;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin: 18px 0 6px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #757474;
+            padding: 12px 14px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+        }
+
+        .nav a img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .nav a.active {
+            background: #fff6c6;
+            color: #c48a00;
+            font-weight: 700;
+            border-left: 6px solid #fde047;
+            padding-left: 8px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+        }
+
+        .logout-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .main {
+            flex: 1;
+            padding: 22px 28px 32px;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 18px;
+        }
+
+        .top-search {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 8px 16px;
+            min-width: 360px;
+            border: 1px solid #f0f0f0;
+        }
+
+        .top-search img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .top-search input {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            width: 100%;
+            background: transparent;
+        }
+
+        .icon-btn {
+            width: 28px;
+            height: 28px;
+        }
+
+        .page-head {
+            margin-top: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-title {
+            font-family: "Inter", sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: #5b5b5b;
+            margin-top: 6px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent) 30%, var(--accent-dark) 100%);
+            color: #1f1f1f;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary img {
+            width: 18px;
+            height: 18px;
+        }
+
+        .filter-card {
+            margin-top: 18px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 18px;
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .filter-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f9f9f9;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 14px;
+        }
+
+        .filter-input img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .filter-input input {
+            border: none;
+            outline: none;
+            width: 100%;
+            background: transparent;
+            font-size: 16px;
+            color: #7f7f7f;
+        }
+
+        .filter-select {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            background: #f1f1f1;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 12px;
+            min-width: 170px;
+            color: #5a5a5a;
+            font-size: 16px;
+        }
+
+        .filter-select img {
+            width: 14px;
+            height: 14px;
+        }
+
+        .table-card {
+            margin-top: 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .table-head {
+            background: #d9d9d9;
+            display: grid;
+            grid-template-columns: 2.2fr 1fr 1fr 1fr 0.8fr 0.6fr;
+            gap: 10px;
+            padding: 16px 18px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr 1fr 1fr 0.8fr 0.6fr;
+            gap: 10px;
+            padding: 16px 18px;
+            border-bottom: 1px solid #efefef;
+            align-items: center;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .product-info img {
+            width: 55px;
+            height: 55px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .product-title {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .product-subtitle {
+            font-size: 12px;
+            color: #9b9696;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 999px;
+            border: 1px solid #cf00e2;
+            background: #f3d1ff;
+            color: #7e0094;
+            font-size: 12px;
+            font-weight: 600;
+            width: fit-content;
+        }
+
+        .sku {
+            color: #5d5d5d;
+            font-size: 12px;
+        }
+
+        .stock {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #5d5d5d;
+        }
+
+        .stock img {
+            width: 8px;
+            height: 8px;
+        }
+
+        .price {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            border: 1px solid #e1dada;
+            background: #ffffff;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: #5d5d5d;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .action-danger {
+            color: #b91c1c;
+            border-color: #f3b6b6;
+        }
+
+        .table-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            color: #7c7575;
+            font-size: 13px;
+        }
+
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .page-btn {
+            border: 1px solid #e1dada;
+            background: #ffffff;
+            border-radius: 5px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: #5d5d5d;
+        }
+
+        .page-btn.active {
+            background: #fde047;
+            color: #1f1f1f;
+        }
+
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 280px;
+            }
+
+            .table-head,
+            .table-row {
+                grid-template-columns: 2fr 1fr 1fr 1fr 0.8fr 0.8fr;
+            }
+        }
+
+        @media (max-width: 980px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .filter-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="brand">
+            <img alt="LV" src="https://www.figma.com/api/mcp/asset/019fd834-650d-4122-9e55-a71ea3250fc9" />
+            <span>LV ADMIN</span>
+        </div>
+
+        <div>
+            <div class="section-title">QUẢN LÝ</div>
+            <nav class="nav">
+                <a th:href="@{/dashboard}">
+                    <img alt="Bảng điều khiển" src="https://www.figma.com/api/mcp/asset/c7123bf9-e5d6-4295-87d2-8abc95229134" />
+                    Bảng điều khiển
+                </a>
+                <a class="active" th:href="@{/products}">
+                    <img alt="Quản lý sản phẩm" src="https://www.figma.com/api/mcp/asset/a36cb554-d07c-4c5c-9e6e-b4a09ab8e160" />
+                    Quản lý sản phẩm
+                </a>
+                <a th:href="@{/categories}">
+                    <img alt="Quản lý danh mục" src="https://www.figma.com/api/mcp/asset/a36cb554-d07c-4c5c-9e6e-b4a09ab8e160" />
+                    Quản lý danh mục
+                </a>
+                <a href="#">
+                    <img alt="Đơn hàng" src="https://www.figma.com/api/mcp/asset/abbede67-f4e0-4c18-8387-30bf20f40c11" />
+                    Đơn hàng
+                </a>
+                <a href="#">
+                    <img alt="Người dùng" src="https://www.figma.com/api/mcp/asset/95279d86-7b85-4811-af33-e408d1a56920" />
+                    Người dùng
+                </a>
+                <a href="#">
+                    <img alt="Vouchers" src="https://www.figma.com/api/mcp/asset/79353be3-8145-423a-86d9-beecf49b73e5" />
+                    Vouchers và khuyến mãi
+                </a>
+            </nav>
+        </div>
+
+        <div>
+            <div class="section-title">HỆ THỐNG</div>
+            <nav class="nav">
+                <a href="#">
+                    <img alt="Báo cáo" src="https://www.figma.com/api/mcp/asset/1a80e619-78e6-49fc-b1ff-356e262eca78" />
+                    Báo cáo
+                </a>
+                <a href="#">
+                    <img alt="Cài đặt" src="https://www.figma.com/api/mcp/asset/42e42313-4a07-47cb-b0c6-9c370db57c5e" />
+                    Cài đặt
+                </a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="profile">
+                <img alt="Hoàn Hảo" src="https://www.figma.com/api/mcp/asset/63a3f214-6dd6-4ecf-a87b-a65df00bbe35" />
+                <div>
+                    <div style="font-weight:700;">Hoàn Hảo</div>
+                    <div style="color:#757474; font-size:14px;">Quản trị viên</div>
+                </div>
+            </div>
+            <img class="logout-icon" alt="Đăng xuất" src="https://www.figma.com/api/mcp/asset/befa1fb2-7e00-4aeb-b95f-f1a8a4927d66" />
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="topbar">
+            <div class="top-search">
+                <img alt="Tìm kiếm" src="https://www.figma.com/api/mcp/asset/5caebe32-4ff6-4c2d-ba99-e86e35eb6dea" />
+                <input type="text" placeholder="Tìm kiếm..." />
+            </div>
+            <img class="icon-btn" alt="Thông báo" src="https://www.figma.com/api/mcp/asset/a04fa0d4-5421-42e4-b81a-dc8c4e4ca63f" />
+            <img class="icon-btn" alt="Chế độ tối" src="https://www.figma.com/api/mcp/asset/af90d4ae-4570-4699-9cbe-12bc827370fb" />
+        </div>
+
+        <div class="page-head">
+            <div>
+                <div class="page-title">Quản lý sản phẩm</div>
+                <div class="page-subtitle">Quản lý kho hàng, giá bán và tình trạng tồn kho.</div>
+            </div>
+            <a class="btn-primary" th:href="@{/products/new}">
+                <img alt="Thêm" src="https://www.figma.com/api/mcp/asset/6ab8f5ff-3b58-4e09-927e-4186b3f3fce0" />
+                Thêm sản phẩm mới
+            </a>
+        </div>
+
+        <div class="filter-card">
+            <div class="filter-input">
+                <img alt="Tìm" src="https://www.figma.com/api/mcp/asset/c08365f5-883d-413a-8660-c735d992ad14" />
+                <input type="text" placeholder="Tìm kiếm sản phẩm..." />
+            </div>
+            <div class="filter-select">
+                Tất cả danh mục
+                <img alt="Mở" src="https://www.figma.com/api/mcp/asset/0c3a9658-6c25-4176-ad42-644860839f2d" />
+            </div>
+            <div class="filter-select">
+                Trạng thái tồn kho
+                <img alt="Mở" src="https://www.figma.com/api/mcp/asset/0c3a9658-6c25-4176-ad42-644860839f2d" />
+            </div>
+        </div>
+
+        <div class="table-card">
+            <div class="table-head">
+                <div>TÊN SẢN PHẨM</div>
+                <div>DANH MỤC</div>
+                <div>MÃ SKU</div>
+                <div>TỒN KHO</div>
+                <div>GIÁ</div>
+                <div>HÀNH ĐỘNG</div>
+            </div>
+
+            <div th:if="${#lists.isEmpty(products)}" class="table-row">
+                <div>Chưa có sản phẩm nào trong danh sách</div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <div class="table-row" th:each="product : ${products}">
+                <div class="product-info">
+                    <img alt="Ảnh sản phẩm"
+                         th:src="${product.imageUrl != null && !#strings.isEmpty(product.imageUrl)} ? ${product.imageUrl} : 'https://www.figma.com/api/mcp/asset/83ceb6e6-126a-4dc0-a2a4-53268dfee6fd'" />
+                    <div>
+                        <div class="product-title" th:text="${product.name}">Tên sản phẩm</div>
+                        <div class="product-subtitle" th:text="${product.description}">Mô tả ngắn</div>
+                    </div>
+                </div>
+                <div>
+                    <span class="badge" th:text="${product.category != null ? product.category.name : 'Chưa có'}">Danh mục</span>
+                </div>
+                <div class="sku" th:text="${product.id}">SKU</div>
+                <div class="stock">
+                    <img alt="" src="https://www.figma.com/api/mcp/asset/c969583c-56f6-4b7a-ae29-c6078652ffc5" />
+                    <span th:text="${product.quantity}">0</span>
+                </div>
+                <div class="price" th:text="${product.price} + ' VND'">0 VND</div>
+                <div class="actions">
+                    <a class="action-btn" th:href="@{/products/{id}/edit(id=${product.id})}">Sửa</a>
+                    <form th:action="@{/products/{id}/delete(id=${product.id})}" method="post">
+                        <button class="action-btn action-danger" type="submit">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-footer">
+            <div th:text="'Hiển thị ' + ${#lists.size(products)} + ' sản phẩm'">Hiển thị 0 sản phẩm</div>
+            <div class="pagination">
+                <span class="page-btn">Trước</span>
+                <span class="page-btn active">1</span>
+                <span class="page-btn">2</span>
+                <span class="page-btn">3</span>
+                <span class="page-btn">Sau</span>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
