@@ -20,7 +20,7 @@ public class RegisterController {
         this.registerService = registerService;
     }
 
-    @GetMapping({"/", "/register"})
+    @GetMapping({ "/register"})
     public String registerPage() {
         return "register";
     }
