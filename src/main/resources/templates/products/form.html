@@ -351,6 +351,10 @@
         <div class="card">
             <form th:action="${isEdit} ? @{/products/{id}(id=${product.id})} : @{/products}" method="post" th:object="${product}">
                 <div class="form-grid">
+                    <div th:if="${errorMessage != null}" style="padding: 10px 12px; border: 1px solid #f3b6b6; background: #fff1f1; border-radius: 10px; color: #b91c1c;">
+                        <div style="font-weight:700;">Không thể lưu sản phẩm</div>
+                        <div th:text="${errorMessage}">Lỗi</div>
+                    </div>
                     <div>
                         <label for="name">Tên sản phẩm</label>
                         <input id="name" name="name" type="text" th:value="*{name}" required />
@@ -358,6 +362,21 @@
                     <div>
                         <label for="price">Giá (VND)</label>
                         <input id="price" name="price" type="number" step="0.01" th:value="*{price}" required />
+                    </div>
+
+                    <div>
+                        <label style="display:flex; align-items:center; gap:10px; margin-bottom:0;">
+                            <input id="isDiscounted" name="isDiscounted" type="checkbox" th:checked="*{isDiscounted}" />
+                            Áp dụng giảm giá
+                        </label>
+                        <div style="color:#7c7575; font-size:13px; margin-top:6px;">
+                            Nếu bật giảm giá thì phần trăm giảm phải &gt; 0.
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="discountPercent">Phần trăm giảm (%)</label>
+                        <input id="discountPercent" name="discountPercent" type="number" min="0" max="100" step="1" th:value="*{discountPercent}" />
                     </div>
 
                     <div>
