@@ -701,6 +701,24 @@
             border-radius: 12px;
         }
 
+        /* Toast Notification */
+        #toastNotification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 200;
+            display: none;
+        }
+
+        #toastNotification.show {
+            display: block;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .categories-grid { grid-template-columns: repeat(2, 1fr); }
@@ -766,7 +784,11 @@
                 <button class="icon-btn">
                     <img src="https://www.figma.com/api/mcp/asset/254cb508-1157-4ba8-9f04-d8d33bd96180" alt="Menu" />
                 </button>
-                <a href="/" class="btn btn-primary" style="margin: 0; padding: 10px 18px; font-size: 12px;">Đăng nhập</a>
+                <div th:if="${loggedInUser != null}" style="display: flex; gap: 10px; align-items: center;">
+                    <div class="btn btn-primary" style="margin: 0; padding: 10px 18px; font-size: 12px;" th:text="${loggedInUser.email}">Email</div>
+                    <a href="/logout" class="btn btn-secondary" style="margin: 0; padding: 10px 18px; font-size: 12px; border: 1px solid var(--border-color);">Đăng xuất</a>
+                </div>
+                <a th:if="${loggedInUser == null}" href="/login" class="btn btn-primary" style="margin: 0; padding: 10px 18px; font-size: 12px;">Đăng nhập</a>
             </div>
         </nav>
     </header>
@@ -956,6 +978,36 @@
         </div>
     </footer>
 
+    <!-- Toast Notification -->
+    <div id="toastNotification"></div>
+
+    <script>
+        (function () {
+            var toastElement = document.getElementById('toastNotification');
+            var searchParams = new URLSearchParams(window.location.search);
+            var error = searchParams.get('error');
+
+            function showToast(message, type) {
+                toastElement.textContent = message;
+                toastElement.className = 'show';
+                if (type === 'error') {
+                    toastElement.style.backgroundColor = '#dc2626';
+                } else {
+                    toastElement.style.backgroundColor = '#4caf50';
+                }
+
+                setTimeout(function () {
+                    toastElement.className = toastElement.className.replace('show', '');
+                }, 3000);
+            }
+
+            if (error === 'access_denied') {
+                showToast('Bạn không có quyền truy cập trang này!', 'error');
+                window.history.replaceState({}, document.title, window.location.pathname);
+                return;
+            }
+        })();
+    </script>
 </body>
 </html>
 

@@ -2,8 +2,10 @@ package com.example.webbanmaytinh.controllers;
 
 import com.example.webbanmaytinh.dto.ProductResponse;
 import com.example.webbanmaytinh.entity.Category;
+import com.example.webbanmaytinh.entity.User;
 import com.example.webbanmaytinh.service.CategoryService;
 import com.example.webbanmaytinh.service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +21,10 @@ public class HomeController {
     private final CategoryService categoryService;
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
+
         // Get all categories with their products
         List<Category> categories = categoryService.getAllCategories();
 
@@ -47,4 +52,3 @@ public class HomeController {
         return "redirect:/";
     }
 }
-
