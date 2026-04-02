@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Source Serif Pro', serif;
+            background-color: #111827;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 640px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 26px;
+        }
+
+        .login-title {
+            font-weight: 700;
+            font-size: 70px;
+            color: #f8d740;
+            text-align: center;
+            margin-bottom: 0;
+        }
+
+        .login-card {
+            width: 100%;
+            background: linear-gradient(180deg, rgba(248, 215, 64, 0.99) 0%, rgba(209, 149, 13, 0.97) 87.02%);
+            border-radius: 59px;
+            padding: 60px 40px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 700;
+            font-size: 36px;
+            color: #000;
+            margin-bottom: 10px;
+            padding-left: 10px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 60px;
+            background: #fff;
+            border: 1px solid #000;
+            border-radius: 15px;
+            padding: 0 20px;
+            font-size: 24px;
+            font-family: 'Source Serif Pro', serif;
+            color: #000;
+            outline: none;
+        }
+
+        .form-input::placeholder {
+            color: #757474;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 34px;
+            height: 34px;
+            cursor: pointer;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            min-height: 24px;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -15px;
+            margin-bottom: 40px;
+        }
+
+        .forgot-password a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 24px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            height: 60px;
+            background-color: #000;
+            color: #fddf36;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 36px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Source Serif Pro', serif;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 30px;
+            font-weight: 600;
+            font-size: 24px;
+            color: #000;
+        }
+
+        .register-link a {
+            color: #003776;
+            text-decoration: none;
+        }
+
+        @media (max-width: 640px) {
+            .login-title { font-size: 48px; }
+            .form-label { font-size: 24px; }
+            .form-input { font-size: 18px; }
+            .btn-submit { font-size: 24px; }
+            .forgot-password a, .register-link { font-size: 18px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1 class="login-title">Đăng Nhập</h1>
+        
+        <main class="login-card">
+            <div id="errorMessage" class="error-message"></div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <div class="input-wrapper">
+                        <input class="form-input" id="email" name="email" type="email" placeholder="Nhập email của bạn" required autocomplete="email">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Mật Khẩu</label>
+                    <div class="input-wrapper">
+                        <input class="form-input" id="password" name="password" type="password" placeholder="Nhập mật khẩu" required autocomplete="current-password">
+                        <img th:src="@{https://www.figma.com/api/mcp/asset/17da5a6b-f488-47f7-b20c-1cddace140cd}" class="password-toggle" alt="Toggle password" onclick="togglePassword()">
+                    </div>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="#">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" class="btn-submit">Đăng Nhập</button>
+
+                <div class="register-link">
+                    Chưa có tài khoản? <a th:href="@{/register}">Đăng ký ngay</a>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script th:inline="javascript">
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        }
+
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var error = params.get('error');
+            var errorElement = document.getElementById('errorMessage');
+
+            if (!errorElement) {
+                return;
+            }
+
+            if (error === 'invalid_credentials') {
+                errorElement.textContent = 'Email hoặc mật khẩu không đúng';
+            }
+        })();
+    </script>
+</body>
+</html>
