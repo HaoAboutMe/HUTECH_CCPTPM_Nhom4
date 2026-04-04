@@ -18,19 +18,19 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/home", "/laptop", "/phu-kien", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
 
-                // Ngăn chặn tất cả các phương thức (GET, POST, PUT, DELETE) vào admin endpoints nếu không phải ADMIN
-                .requestMatchers(ADMINENPOINT).hasRole("ADMIN")
+                        // Ngăn chặn tất cả các phương thức (GET, POST, PUT, DELETE) vào admin endpoints
+                        // nếu không phải ADMIN
+                        .requestMatchers(ADMINENPOINT).hasRole("ADMIN")
 
-                .anyRequest().authenticated()
-            )
-            .exceptionHandling(exception -> exception
-                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    // Nếu cố gắng truy cập mà không có quyền, chuyển hướng về trang chủ với thông báo lỗi
-                    response.sendRedirect("/?error=access_denied");
-                })
-            )
-            .formLogin(form -> form.disable())
-            .logout(logout -> logout.disable());
+                        .anyRequest().authenticated())
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            // Nếu cố gắng truy cập mà không có quyền, chuyển hướng về trang chủ với thông
+                            // báo lỗi
+                            response.sendRedirect("/?error=access_denied");
+                        }))
+                .formLogin(form -> form.disable())
+                .logout(logout -> logout.disable());
 
         return http.build();
     }

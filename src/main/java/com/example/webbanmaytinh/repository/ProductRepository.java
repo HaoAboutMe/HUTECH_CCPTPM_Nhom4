@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, String> {
     List<Product> findByIsDiscountedTrueOrderByDiscountPercentDesc();
+    List<Product> findByCategoryId(String categoryId);
 }
 

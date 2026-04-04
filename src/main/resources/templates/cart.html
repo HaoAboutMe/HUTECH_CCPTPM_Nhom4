@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giỏ hàng - LV Computer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Cabin:wght@400;700&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary-yellow: #fddf36;
+            --primary-yellow-dark: #d1950d;
+            --bg-light: #ffffff;
+            --text-dark: #000000;
+            --text-muted: #666666;
+            --border-color: #e2e8f0;
+            --gray-light: #f9f9f9;
+            --footer-bg: #111827;
+            --accent-blue: #308efa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #fcfcfc;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            padding: 0 75px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 20px;
+            color: #000019;
+        }
+
+        .logo-text span {
+            background: linear-gradient(90deg, #fddf36, #978520);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            flex-grow: 1;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #454f5e;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-login {
+            background: linear-gradient(90deg, #f8d740, #d1950d);
+            color: #362d0b;
+            padding: 6px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        /* Cart Content */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 40px 75px;
+        }
+
+        .page-title {
+            font-family: 'Cabin', sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        .cart-list {
+            display: flex;
+            flex-direction: column;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            min-height: 154px;
+            padding: 0 30px;
+            position: relative;
+        }
+
+        .cart-item:nth-child(odd) {
+            background: var(--primary-yellow);
+        }
+
+        .cart-item:nth-child(even) {
+            background: var(--gray-light);
+        }
+
+        .cart-item:first-child {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .product-img-container {
+            width: 138px;
+            height: 138px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 30px;
+            flex-shrink: 0;
+            margin-left: -20px;
+        }
+
+        .product-img-container img {
+            max-width: 138px;
+            max-height: 138px;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 465px;
+            margin-right: 100px;
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+
+        .product-meta {
+            font-size: 15px;
+        }
+
+        .stock-status {
+            color: #ff070b;
+        }
+
+        .cart-actions {
+            display: flex;
+            align-items: center;
+            gap: 92px;
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .price-calc {
+            font-family: 'Cabin', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .quantity-badge {
+            background: #b8b6b6;
+            color: #121212;
+            padding: 2px 12px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-family: 'Cabin', sans-serif;
+            font-weight: 700;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .btn-delete img {
+            width: 45px;
+            height: 45px;
+        }
+
+        .cart-summary {
+            background: var(--primary-yellow);
+            height: 70px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 40px;
+        }
+
+        .total-text {
+            font-family: 'Cabin', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .checkout-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .btn-checkout {
+            background: linear-gradient(135deg, #f8d740, #d1950d);
+            border: none;
+            border-radius: 10px;
+            padding: 15px 40px;
+            font-weight: 700;
+            font-size: 20px;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            color: #362d0b;
+        }
+
+        .btn-continue {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        /* Customer Info Form */
+        .customer-info-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .info-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .info-title {
+            font-family: 'Cabin', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0 15px;
+            font-family: inherit;
+            font-size: 15px;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-yellow-dark);
+        }
+
+        textarea.form-control {
+            height: 100px;
+            padding: 15px;
+        }
+
+        .time-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .radio-group input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-yellow-dark);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 60px 75px;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 83px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .footer-slogan {
+            font-size: 15px;
+            color: white;
+            opacity: 0.9;
+            max-width: 300px;
+            line-height: 1.4;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+        }
+
+        .footer-col h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .footer-col p {
+            margin-bottom: 25px;
+            font-size: 18px;
+            opacity: 0.8;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .footer-accent {
+            color: #308efa;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo-section">
+                <img src="https://www.figma.com/api/mcp/asset/9616780a-004c-483b-87c4-8c01b8aad794" class="logo-icon"
+                    alt="LV Computer">
+                <p class="logo-text">LV <span>COMPUTER</span></p>
+            </a>
+            <div class="nav-links">
+                <a href="/pc-build" class="nav-link">Xây dựng cấu hình</a>
+                <a href="/laptops" class="nav-link">Laptops</a>
+                <a href="/products" class="nav-link">Sản phẩm</a>
+                <a href="/contact" class="nav-link">Liên Hệ</a>
+            </div>
+            <div class="nav-actions">
+                <i class="fas fa-search" style="font-size: 20px; color: #444;"></i>
+                <a href="/cart" style="color: inherit; text-decoration: none;">
+                    <i class="fas fa-shopping-cart" style="font-size: 20px; color: #308efa;"></i>
+                </a>
+                <i class="far fa-moon" style="font-size: 20px; color: #444;"></i>
+                <a href="/login" class="btn-login">Đăng nhập</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">Giỏ hàng</h1>
+
+        <div class="cart-list">
+            <div th:if="${#lists.isEmpty(cartItems)}" style="padding: 100px; text-align: center; background: #f9f9f9;">
+                Giỏ hàng của bạn đang trống.
+            </div>
+
+            <div th:each="item : ${cartItems}" class="cart-item">
+                <div class="product-img-container">
+                    <img th:src="${item.imageUrl != null and item.imageUrl != '' ? item.imageUrl : 'https://via.placeholder.com/150'}" 
+                         th:alt="${item.productName}">
+                </div>
+                <div class="product-info">
+                    <p class="product-name" th:text="${item.productName}">Product Name</p>
+                    <p class="product-meta">Bảo hành: 36 Tháng</p>
+                    <p class="product-meta">Kho hàng: <span class="stock-status">Còn hàng</span></p>
+                </div>
+                <div class="cart-actions">
+                    <div class="price-calc">
+                        <span th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}">0</span> x 
+                        <span class="quantity-badge" th:text="${item.quantity}">1</span> = 
+                        <span th:text="${#numbers.formatDecimal(item.price * item.quantity, 0, 'COMMA', 0, 'POINT')}">0</span>
+                    </div>
+                    <button class="btn-delete">
+                        <img src="https://www.figma.com/api/mcp/asset/89ba2c4c-4308-4e35-863a-53aac47c49eb"
+                            alt="Delete">
+                    </button>
+                </div>
+            </div>
+
+            <!-- Total Bar (Yellow) -->
+            <div class="cart-summary" th:if="${!#lists.isEmpty(cartItems)}">
+                <span class="total-text" th:text="'Tổng tiền: ' + ${#numbers.formatDecimal(total, 0, 'COMMA', 0, 'POINT')} + ' VND'">Tổng tiền: 0 VND</span>
+            </div>
+        </div>
+
+        <div class="customer-info-section">
+            <!-- Thông tin người nhận -->
+            <div class="info-card">
+                <h3 class="info-title"><i class="fas fa-user-circle"></i> THÔNG TIN KHÁCH HÀNG</h3>
+                <div class="form-group">
+                    <label class="form-label">Họ và tên *</label>
+                    <input type="text" class="form-control" placeholder="Nhập họ và tên của bạn" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Số điện thoại *</label>
+                    <input type="tel" class="form-control" placeholder="Nhập số điện thoại" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Địa chỉ nhận hàng *</label>
+                    <textarea class="form-control" placeholder="Số nhà, tên đường, phường/xã..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Ghi chú thêm</label>
+                    <input type="text" class="form-control" placeholder="Ghi chú cho shipper...">
+                </div>
+            </div>
+
+            <!-- Hẹn giờ nhận hàng -->
+            <div class="info-card">
+                <h3 class="info-title"><i class="fas fa-clock"></i> THỜI GIAN NHẬN HÀNG</h3>
+                <div class="time-options">
+                    <label class="radio-group">
+                        <input type="radio" name="delivery_time" checked>
+                        <span>Giao hàng ngay bây giờ (30 - 60 phút)</span>
+                    </label>
+                    <hr style="border: none; border-top: 1px solid #eee;">
+                    <label class="radio-group">
+                        <input type="radio" name="delivery_time">
+                        <span>Hẹn giờ nhận hàng </span>
+                    </label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                        <div>
+                            <label class="form-label" style="font-size: 12px;">Ngày chọn</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div>
+                            <label class="form-label" style="font-size: 12px;">Giờ chọn</label>
+                            <select class="form-control">
+                                <option>08:00 - 10:00</option>
+                                <option>10:00 - 12:00</option>
+                                <option>13:00 - 15:00</option>
+                                <option>15:00 - 17:00</option>
+                                <option>18:00 - 20:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top: 20px; background: #e3f2fd; padding:15px; border-radius: 10px; font-size: 14px; color: #1976d2;">
+                        <i class="fas fa-info-circle"></i> Phí vận chuyển sẽ được tính dựa trên quãng đường thực tế.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-bar">
+            <a href="/products" class="btn-continue">
+                <i class="fas fa-arrow-left"></i> Tiếp tục mua hàng
+            </a>
+            <button class="btn-checkout">THANH TOÁN GIỎ HÀNG</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-brand">
+            <div class="footer-logo">
+                <img src="https://www.figma.com/api/mcp/asset/9616780a-004c-483b-87c4-8c01b8aad794" width="52" alt="LV">
+                <p class="logo-text" style="color: white; font-family: 'Inter', sans-serif;">LV <span
+                        style="color: #fddf36; -webkit-text-fill-color: #fddf36;">COMPUTER</span></p>
+            </div>
+            <p class="footer-slogan" style="font-family: 'Roboto', sans-serif;">
+                Chuyên bán sỉ lẻ linh kiện máy tính , thi công lắp đặt phòng game - cơ quan văn phòng và gaming house !
+                <br />Build pc gaming theo yêu cầu giá tối ưu hiệu quả !
+            </p>
+            <div style="margin-top: 5px;">
+                <img src="https://www.figma.com/api/mcp/asset/9598fa8d-e7ba-49ce-93a0-1bb94fbe61ca" width="285">
+            </div>
+        </div>
+        <div class="footer-links">
+            <div class="footer-col">
+                <h3>Sản phẩm</h3>
+                <p>PC Gaming</p>
+                <p>Workstation</p>
+                <p>Gaming Gear</p>
+            </div>
+            <div class="footer-col">
+                <h3>Thông tin</h3>
+                <p>Hướng dẫn mua hàng</p>
+                <p>Hướng dẫn thanh toán</p>
+                <p>Hướng dẫn trả góp</p>
+            </div>
+            <div class="footer-col">
+                <h3>Hỗ trợ</h3>
+                <p>Mua hàng: <span class="footer-accent">078 971 6419</span></p>
+                <p>Bảo hành: <span class="footer-accent">078 971 6419</span></p>
+                <p>Email: <span class="footer-accent">lvcomputer.cg@gmail.com</span></p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
