@@ -12,26 +12,29 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private String[] ADMINENPOINT = { "/products/**", "/categories/**" };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/home", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/", "/home", "/register", "/login", "/logout", "/css/**", "/js/**",
+                                "/images/**", "/pc-build/**", "/cart/**")
+                        .permitAll()
 
-                // Ngăn chặn tất cả các phương thức (GET, POST, PUT, DELETE) vào admin endpoints nếu không phải ADMIN
-                .requestMatchers(ADMINENPOINT).hasRole("ADMIN")
+                        // Ngăn chặn tất cả các phương thức (GET, POST, PUT, DELETE) vào admin endpoints
+                        // nếu không phải ADMIN
+                        .requestMatchers(ADMINENPOINT).hasRole("ADMIN")
 
-                .anyRequest().authenticated()
-            )
-            .exceptionHandling(exception -> exception
-                .accessDeniedHandler((request, response, accessDeniedException) -> {
-                    // Nếu cố gắng truy cập mà không có quyền, chuyển hướng về trang chủ với thông báo lỗi
-                    response.sendRedirect("/?error=access_denied");
-                })
-            )
-            .formLogin(form -> form.disable())
-            .logout(logout -> logout.disable());
+                        .anyRequest().authenticated())
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            // Nếu cố gắng truy cập mà không có quyền, chuyển hướng về trang chủ với thông
+                            // báo lỗi
+                            response.sendRedirect("/?error=access_denied");
+                        }))
+                .formLogin(form -> form.disable())
+                .logout(logout -> logout.disable());
 
         return http.build();
     }
