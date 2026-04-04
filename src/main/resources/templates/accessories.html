@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh mục Phụ kiện</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/accessories.css}" href="/css/accessories.css">
+</head>
+<body>
+    <header class="lv-header">
+        <div class="lv-container header-inner">
+            <a class="brand" th:href="@{/}">
+                <img src="https://www.figma.com/api/mcp/asset/41e87697-b797-4958-9c76-16cc9125719a" alt="LV Computer logo">
+                <span class="brand-name"><strong>LV</strong> COMPUTER</span>
+            </a>
+
+            <nav class="menu">
+                <a href="#">Xây dựng cấu hình</a>
+                <a class="active" th:href="@{/laptop}">Laptop</a>
+                <a th:href="@{/products}">Sản phẩm</a>
+                <a th:href="@{/phu-kien}">Liên hệ</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="icon-btn" aria-label="Tìm kiếm">
+                    <img src="https://www.figma.com/api/mcp/asset/87705107-8669-49ee-982d-780df01f4b24" alt="Search">
+                </button>
+                <button class="icon-btn" aria-label="Giỏ hàng">
+                    <img src="https://www.figma.com/api/mcp/asset/9aff5482-d65b-4201-a0d5-4579f67d4029" alt="Cart">
+                </button>
+                <button class="icon-btn" aria-label="Chế độ tối">
+                    <img src="https://www.figma.com/api/mcp/asset/97b4ccc6-1d79-4f12-82eb-f5cfda5fef5e" alt="Dark mode">
+                </button>
+                <a class="login-btn" th:href="@{/login}">Đăng nhập</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-banner accessory-hero">
+        <div class="hero-overlay"></div>
+        <h1>PHỤ KIỆN</h1>
+    </section>
+
+    <div class="hero-gap"></div>
+
+    <main class="accessory-main">
+        <section class="accessory-block">
+            <div class="intro-col">
+                <h2>Phụ kiện laptop, PC</h2>
+                <p>Trang bị toàn diện, sẵn sàng cho mọi nhu cầu</p>
+                <a href="#" class="discover-btn">Khám phá ngay <span>›</span></a>
+            </div>
+
+            <div class="content-col">
+                <div class="chip-row">
+                    <button class="chip active">Chuột</button>
+                    <button class="chip">Bàn phím</button>
+                    <button class="chip">Webcam</button>
+                    <button class="chip">Balo, Túi xách</button>
+                    <button class="chip">Giá đỡ</button>
+                    <button class="chip">Thẻ nhớ</button>
+                </div>
+
+                <div class="items-row">
+                    <article class="item-card">
+                        <img src="https://www.figma.com/api/mcp/asset/d8ba3f47-3109-4ace-b533-4c95198bb186" alt="Chuột Logitech G Pro X Superlight 2 Dex Wireless White">
+                        <h3>Chuột Logitech G Pro X Superlight 2 Dex Wireless White</h3>
+                        <p class="price">3.190.000đ</p>
+                    </article>
+
+                    <article class="item-card">
+                        <img src="https://www.figma.com/api/mcp/asset/a0f3b8ae-77aa-453f-8d94-06113ec283a4" alt="Chuột Logitech G Pro X Superlight 2C Wireless Black">
+                        <h3>Chuột Logitech G Pro X Superlight 2C Wireless Black</h3>
+                        <p class="price">3.150.000đ</p>
+                    </article>
+
+                    <article class="item-card">
+                        <img src="https://www.figma.com/api/mcp/asset/396545ea-f681-48c7-845a-79eba0bd367f" alt="Chuột Logitech G502 Hero Gaming">
+                        <h3>Chuột Logitech G502 Hero Gaming</h3>
+                        <p class="price">890.000đ</p>
+                    </article>
+
+                    <article class="item-card">
+                        <img src="https://www.figma.com/api/mcp/asset/f3d6e1ad-06d7-4f8e-937b-f4968efe28bf" alt="Chuột Rapoo VT3S Wireless 8K White">
+                        <h3>Chuột Rapoo VT3S Wireless 8K White</h3>
+                        <p class="price">1.090.000đ</p>
+                    </article>
+                </div>
+                <button class="next-btn" aria-label="Xem thêm">›</button>
+            </div>
+        </section>
+
+        <section class="accessory-block compact">
+            <div class="intro-col">
+                <h2>Phụ kiện laptop, PC</h2>
+                <p>Trang bị toàn diện, sẵn sàng cho mọi nhu cầu</p>
+                <a href="#" class="discover-btn">Khám phá ngay <span>›</span></a>
+            </div>
+
+            <div class="content-col">
+                <div class="chip-row">
+                    <button class="chip">Chuột</button>
+                    <button class="chip active">Bàn phím</button>
+                    <button class="chip">Webcam</button>
+                    <button class="chip">Balo, Túi xách</button>
+                    <button class="chip">Giá đỡ</button>
+                    <button class="chip">Thẻ nhớ</button>
+                </div>
+
+                <div class="items-row three">
+                    <article class="item-card wide">
+                        <img src="https://www.figma.com/api/mcp/asset/a2b37ac5-872a-4d62-b0fa-f63f5cc36929" alt="Bàn phím pastel">
+                    </article>
+                    <article class="item-card wide">
+                        <img src="https://www.figma.com/api/mcp/asset/c522e767-b265-4ae7-8578-94940cb788ab" alt="Bàn phím trắng xám">
+                    </article>
+                    <article class="item-card wide">
+                        <img src="https://www.figma.com/api/mcp/asset/26b52e42-976b-48f2-a04d-36ba3c6bf812" alt="Bàn phím RGB">
+                    </article>
+                </div>
+                <button class="next-btn" aria-label="Xem thêm">›</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="lv-footer">
+        <div class="lv-container footer-grid">
+            <div>
+                <a class="brand footer-brand" th:href="@{/}">
+                    <img src="https://www.figma.com/api/mcp/asset/41e87697-b797-4958-9c76-16cc9125719a" alt="LV Computer logo">
+                    <span class="brand-name"><strong>LV</strong> COMPUTER</span>
+                </a>
+                <p>Chuyên bán sỉ lẻ linh kiện máy tính, thi công lắp đặt phòng game và văn phòng.</p>
+                <p>Build PC gaming theo yêu cầu, tối ưu hiệu quả.</p>
+                <img class="social-img" src="https://www.figma.com/api/mcp/asset/245e3b02-b4fc-4d57-b3e8-76a868ccc1f0" alt="Facebook, TikTok, Zalo">
+            </div>
+            <div>
+                <h3>Sản phẩm</h3>
+                <a href="#">PC Gaming</a>
+                <a href="#">Workstation</a>
+                <a href="#">Gaming Gear</a>
+            </div>
+            <div>
+                <h3>Thông tin</h3>
+                <a href="#">Hướng dẫn mua hàng</a>
+                <a href="#">Hướng dẫn thanh toán</a>
+                <a href="#">Hướng dẫn trả góp</a>
+            </div>
+            <div>
+                <h3>Hỗ trợ</h3>
+                <p>Mua hàng: <strong>078 971 6419</strong></p>
+                <p>Bảo hành: <strong>078 971 6419</strong></p>
+                <p>Email: <strong>lvcomputer.cg@gmail.com</strong></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
