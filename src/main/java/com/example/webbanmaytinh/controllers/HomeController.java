@@ -1,17 +1,19 @@
 package com.example.webbanmaytinh.controllers;
 
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+
 import com.example.webbanmaytinh.dto.ProductResponse;
 import com.example.webbanmaytinh.entity.Category;
 import com.example.webbanmaytinh.entity.User;
 import com.example.webbanmaytinh.service.CategoryService;
 import com.example.webbanmaytinh.service.ProductService;
+
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -50,5 +52,21 @@ public class HomeController {
     @GetMapping("/home")
     public String homeAlias() {
         return "redirect:/";
+    }
+
+    @GetMapping("/laptop")
+    public String laptopPage(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
+        model.addAttribute("activeMenu", "laptop");
+        return "laptop";
+    }
+
+    @GetMapping("/phu-kien")
+    public String accessoriesPage(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
+        model.addAttribute("activeMenu", "accessories");
+        return "accessories";
     }
 }

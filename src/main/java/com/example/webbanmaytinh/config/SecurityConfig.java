@@ -2,7 +2,6 @@ package com.example.webbanmaytinh.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
@@ -11,13 +10,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private String[] ADMINENPOINT = { "/products/**", "/categories/**" };
+    private final String[] ADMINENPOINT = { "/products/**", "/categories/**" };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/home", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/home", "/laptop", "/phu-kien", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
 
                 // Ngăn chặn tất cả các phương thức (GET, POST, PUT, DELETE) vào admin endpoints nếu không phải ADMIN
                 .requestMatchers(ADMINENPOINT).hasRole("ADMIN")
