@@ -1,24 +1,22 @@
 package com.example.webbanmaytinh.controllers;
 
-import java.util.List;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import com.example.webbanmaytinh.dto.ProductResponse;
 import com.example.webbanmaytinh.entity.Category;
 import com.example.webbanmaytinh.entity.User;
 import com.example.webbanmaytinh.service.CategoryService;
 import com.example.webbanmaytinh.service.ProductService;
-
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+import java.util.List;
+
 @RequiredArgsConstructor
-public class HomeController {
-
+@Controller
+public class HomeController
+{
     private final ProductService productService;
     private final CategoryService categoryService;
 
@@ -59,7 +57,6 @@ public class HomeController {
         model.addAttribute("activeMenu", "contact");
         return "contact";
     }
-}
 
     @GetMapping("/laptop")
     public String laptopPage(Model model, HttpSession session) {
