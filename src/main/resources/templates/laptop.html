@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh mục Laptop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montagu+Slab:wght@700&family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/laptop.css}" href="/css/laptop.css">
+</head>
+<body>
+    <header class="lv-header">
+        <div class="lv-container header-inner">
+            <a class="brand" th:href="@{/}">
+                <img src="https://www.figma.com/api/mcp/asset/cc137bc3-802c-4d10-833c-d1db432576f7" alt="LV Computer logo">
+                <span class="brand-name"><strong>LV</strong> COMPUTER</span>
+            </a>
+
+            <nav class="menu">
+                <a href="#">Xây dựng cấu hình</a>
+                <a class="active" th:href="@{/laptop}">Laptop</a>
+                <a th:href="@{/products}">Sản phẩm</a>
+                <a th:href="@{/phu-kien}">Liên hệ</a>
+            </nav>
+
+            <div class="header-actions">
+                <button class="icon-btn" aria-label="Tìm kiếm">
+                    <img src="https://www.figma.com/api/mcp/asset/e984deb8-8719-4b01-9294-63742fc40b54" alt="Search">
+                </button>
+                <button class="icon-btn" aria-label="Giỏ hàng">
+                    <img src="https://www.figma.com/api/mcp/asset/82593a2b-b3be-44fb-8933-10ecba002065" alt="Cart">
+                </button>
+                <button class="icon-btn" aria-label="Chế độ tối">
+                    <img src="https://www.figma.com/api/mcp/asset/668e2cc5-d74e-4a9c-bd54-7ea1f2025c82" alt="Dark mode">
+                </button>
+                <a class="login-btn" th:href="@{/login}">Đăng nhập</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-banner laptop-hero">
+        <div class="hero-overlay"></div>
+        <h1>LAPTOP</h1>
+    </section>
+
+    <main class="catalog-wrap">
+        <aside class="filter-panel">
+            <h2>Bộ lọc tìm kiếm</h2>
+
+            <div class="filter-section">
+                <div class="section-title">Hãng sản xuất <span>⌃</span></div>
+                <div class="brand-grid">
+                    <button><img src="https://www.figma.com/api/mcp/asset/83651fbb-6d13-42dd-86cc-a1a0c78aec22" alt="Asus"></button>
+                    <button><img src="https://www.figma.com/api/mcp/asset/31e38161-b789-406b-9cb7-8fefcccfd203" alt="Apple"></button>
+                    <button><img src="https://www.figma.com/api/mcp/asset/86c798e2-4a08-486e-91f2-02376dc6cc61" alt="Dell"></button>
+                    <button><img src="https://www.figma.com/api/mcp/asset/2c72d40d-2ed8-4f0b-9979-35c4ba840173" alt="HP"></button>
+                    <button><img src="https://www.figma.com/api/mcp/asset/98ff8c58-8477-4b82-b4ae-5b3947b5e905" alt="Lenovo"></button>
+                    <button><img src="https://www.figma.com/api/mcp/asset/47fc8ac0-9688-4954-9a08-328e5d41a8cc" alt="Acer"></button>
+                </div>
+                <a href="#" class="more-link">Xem thêm</a>
+            </div>
+
+            <div class="filter-section">
+                <div class="section-title">Mức giá <span>⌃</span></div>
+                <label class="check-item active"><input type="checkbox" checked> Tất cả</label>
+                <label class="check-item"><input type="checkbox"> Dưới 10 triệu</label>
+                <label class="check-item"><input type="checkbox"> Từ 10 - 15 triệu</label>
+                <label class="check-item"><input type="checkbox"> Từ 15 - 20 triệu</label>
+                <label class="check-item"><input type="checkbox"> Từ 20 - 25 triệu</label>
+                <label class="check-item"><input type="checkbox"> Từ 25 - 30 triệu</label>
+                <label class="check-item"><input type="checkbox"> Trên 30 triệu</label>
+            </div>
+
+            <div class="filter-section">
+                <div class="section-title">Hoặc nhập khoảng giá phù hợp với bạn:</div>
+                <div class="price-inputs">
+                    <div>5.000.000đ</div>
+                    <span>~</span>
+                    <div>60.000.000đ</div>
+                </div>
+                <div class="price-line"></div>
+            </div>
+
+            <div class="filter-section">
+                <div class="section-title">Nhu cầu <span>⌃</span></div>
+                <div class="need-grid">
+                    <button>
+                        <img src="https://www.figma.com/api/mcp/asset/8bf87234-cd10-46ed-b2d4-c084bc196211" alt="Gaming">
+                        <span>Gaming - Đồ họa</span>
+                    </button>
+                    <button>
+                        <img src="https://www.figma.com/api/mcp/asset/b9010367-4dee-47f7-8528-8b9f0df04731" alt="Van phong">
+                        <span>Văn phòng</span>
+                    </button>
+                    <button>
+                        <img src="https://www.figma.com/api/mcp/asset/12b383ce-07a4-4605-946e-466edf0a12f9" alt="Mong nhe">
+                        <span>Mỏng nhẹ</span>
+                    </button>
+                    <button>
+                        <img src="https://www.figma.com/api/mcp/asset/57b8e55b-2d77-4e28-8b50-f04041c600be" alt="AI">
+                        <span>AI</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <section class="catalog-panel">
+            <div class="scroll-indicator">⌄⌄</div>
+
+            <div class="catalog-grid">
+                <article class="laptop-tile">
+                    <div class="tile-card image-card">
+                        <img src="https://www.figma.com/api/mcp/asset/8496ac81-3d50-4983-9e4e-f9d809115160" alt="Laptop HP 14s">
+                    </div>
+                    <div class="tool-row">
+                        <img src="https://www.figma.com/api/mcp/asset/a76f48b2-bb8e-431b-a65e-a8a0548c56c7" alt="Tool 1">
+                        <img src="https://www.figma.com/api/mcp/asset/c16b16cd-9c48-490f-a6c9-9c9602e24947" alt="Tool 2">
+                        <img src="https://www.figma.com/api/mcp/asset/14bb6f7e-099e-4679-9c2e-2fcb94db65e3" alt="Tool 3">
+                        <img src="https://www.figma.com/api/mcp/asset/3eb01fc4-c5c2-47a3-a3dc-066e54acda22" alt="Tool 4">
+                    </div>
+                    <div class="tile-card spec-card">
+                        <p class="name">Laptop HP 14s em0086AU R5 7520U/16GB/512GB/14"FHD</p>
+                        <p><strong>CPU:</strong> Ryzen 5</p>
+                        <p><strong>Card:</strong> AMD Radeon Graphics</p>
+                        <p><strong>Bảo hành:</strong> 36 Tháng</p>
+                        <p><strong>Kho hàng:</strong> <span class="stock">Còn hàng</span></p>
+                    </div>
+                    <div class="tile-card price-card">
+                        <p class="old-price"><img src="https://www.figma.com/api/mcp/asset/3e35bc52-77bb-4843-8c1a-ca19a0e1ffe6" alt="Giảm"> 15.890.000đ - 13%</p>
+                        <p class="new-price"><img src="https://www.figma.com/api/mcp/asset/e70fa8e2-f780-416b-a913-37fd646e62e1" alt="Giá mới"> 13.790.000đ</p>
+                        <p class="save-price">Giảm 2.100.000đ</p>
+                    </div>
+                </article>
+
+                <article class="laptop-tile">
+                    <div class="tile-card image-card">
+                        <img src="https://www.figma.com/api/mcp/asset/e90e34b1-629f-4157-9c05-b88fd1fd77bb" alt="Laptop Dell 15">
+                    </div>
+                    <div class="tool-row">
+                        <img src="https://www.figma.com/api/mcp/asset/a76f48b2-bb8e-431b-a65e-a8a0548c56c7" alt="Tool 1">
+                        <img src="https://www.figma.com/api/mcp/asset/c16b16cd-9c48-490f-a6c9-9c9602e24947" alt="Tool 2">
+                        <img src="https://www.figma.com/api/mcp/asset/14bb6f7e-099e-4679-9c2e-2fcb94db65e3" alt="Tool 3">
+                        <img src="https://www.figma.com/api/mcp/asset/3eb01fc4-c5c2-47a3-a3dc-066e54acda22" alt="Tool 4">
+                    </div>
+                    <div class="tile-card spec-card">
+                        <p class="name">Laptop Dell 15 DC15255 R5 7530U/16GB/15.6"FHD</p>
+                        <p><strong>CPU:</strong> Ryzen 5</p>
+                        <p><strong>Card:</strong> AMD Radeon Graphics</p>
+                        <p><strong>Bảo hành:</strong> 36 Tháng</p>
+                        <p><strong>Kho hàng:</strong> <span class="stock">Còn hàng</span></p>
+                    </div>
+                    <div class="tile-card price-card">
+                        <p class="old-price"><img src="https://www.figma.com/api/mcp/asset/3e35bc52-77bb-4843-8c1a-ca19a0e1ffe6" alt="Giảm"> 16.990.000đ - 8%</p>
+                        <p class="new-price"><img src="https://www.figma.com/api/mcp/asset/e70fa8e2-f780-416b-a913-37fd646e62e1" alt="Giá mới"> 15.690.000đ</p>
+                        <p class="save-price">Giảm 1.300.000đ</p>
+                    </div>
+                </article>
+
+                <article class="laptop-tile">
+                    <div class="tile-card image-card">
+                        <img src="https://www.figma.com/api/mcp/asset/74a6a00a-4aec-43d5-8e2b-2c82ec5c8cd7" alt="Lenovo V14">
+                    </div>
+                    <div class="tool-row">
+                        <img src="https://www.figma.com/api/mcp/asset/a76f48b2-bb8e-431b-a65e-a8a0548c56c7" alt="Tool 1">
+                        <img src="https://www.figma.com/api/mcp/asset/c16b16cd-9c48-490f-a6c9-9c9602e24947" alt="Tool 2">
+                        <img src="https://www.figma.com/api/mcp/asset/14bb6f7e-099e-4679-9c2e-2fcb94db65e3" alt="Tool 3">
+                        <img src="https://www.figma.com/api/mcp/asset/3eb01fc4-c5c2-47a3-a3dc-066e54acda22" alt="Tool 4">
+                    </div>
+                    <div class="tile-card spec-card">
+                        <p class="name">Lenovo V14 G4 IRU i3-1315U/8GB/512GB/14"FHD</p>
+                        <p><strong>CPU:</strong> Core i3</p>
+                        <p><strong>Card:</strong> Intel UHD Graphics</p>
+                        <p><strong>Bảo hành:</strong> 36 Tháng</p>
+                        <p><strong>Kho hàng:</strong> <span class="stock">Còn hàng</span></p>
+                    </div>
+                    <div class="tile-card price-card">
+                        <p class="old-price"><img src="https://www.figma.com/api/mcp/asset/3e35bc52-77bb-4843-8c1a-ca19a0e1ffe6" alt="Giảm"> 11.590.000đ - 14%</p>
+                        <p class="new-price"><img src="https://www.figma.com/api/mcp/asset/e70fa8e2-f780-416b-a913-37fd646e62e1" alt="Giá mới"> 9.990.000đ</p>
+                        <p class="save-price">Giảm 1.600.000đ</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="lv-footer">
+        <div class="lv-container footer-grid">
+            <div>
+                <a class="brand footer-brand" th:href="@{/}">
+                    <img src="https://www.figma.com/api/mcp/asset/cc137bc3-802c-4d10-833c-d1db432576f7" alt="LV Computer logo">
+                    <span class="brand-name"><strong>LV</strong> COMPUTER</span>
+                </a>
+                <p>Chuyên bán sỉ lẻ linh kiện máy tính, thi công lắp đặt phòng game và văn phòng.</p>
+                <p>Build PC gaming theo yêu cầu, tối ưu hiệu quả.</p>
+                <img class="social-img" src="https://www.figma.com/api/mcp/asset/ab42c1b2-9381-4794-a6c5-1f2c99754308" alt="Facebook, TikTok, Zalo">
+            </div>
+            <div>
+                <h3>Sản phẩm</h3>
+                <a href="#">PC Gaming</a>
+                <a href="#">Workstation</a>
+                <a href="#">Gaming Gear</a>
+            </div>
+            <div>
+                <h3>Thông tin</h3>
+                <a href="#">Hướng dẫn mua hàng</a>
+                <a href="#">Hướng dẫn thanh toán</a>
+                <a href="#">Hướng dẫn trả góp</a>
+            </div>
+            <div>
+                <h3>Hỗ trợ</h3>
+                <p>Mua hàng: <strong>078 971 6419</strong></p>
+                <p>Bảo hành: <strong>078 971 6419</strong></p>
+                <p>Email: <strong>lvcomputer.cg@gmail.com</strong></p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -2,8 +2,10 @@ package com.example.webbanmaytinh.controllers;
 
 import com.example.webbanmaytinh.entity.Category;
 import com.example.webbanmaytinh.entity.Product;
+import com.example.webbanmaytinh.entity.User;
 import com.example.webbanmaytinh.service.CategoryService;
 import com.example.webbanmaytinh.service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -23,14 +25,18 @@ public class ProductController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public String list(Model model) {
+    public String list(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
         model.addAttribute("products", productService.getAllProducts());
         model.addAttribute("activeMenu", "products");
         return "products/list";
     }
 
     @GetMapping("/new")
-    public String createForm(Model model) {
+    public String createForm(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
         model.addAttribute("product", new Product());
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("isEdit", false);
@@ -63,7 +69,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable String id, Model model) {
+    public String editForm(@PathVariable String id, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
         Product product = productService.getProductByID(id);
         if (product == null) {
             return "redirect:/products";

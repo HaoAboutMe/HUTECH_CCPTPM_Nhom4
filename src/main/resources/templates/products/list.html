@@ -478,13 +478,15 @@
 
         <div class="sidebar-footer">
             <div class="profile">
-                <img alt="Hoàn Hảo" src="https://www.figma.com/api/mcp/asset/63a3f214-6dd6-4ecf-a87b-a65df00bbe35" />
+                <img alt="User profile" src="https://www.figma.com/api/mcp/asset/63a3f214-6dd6-4ecf-a87b-a65df00bbe35" />
                 <div>
-                    <div style="font-weight:700;">Hoàn Hảo</div>
-                    <div style="color:#757474; font-size:14px;">Quản trị viên</div>
+                    <div style="font-weight:700;" th:text="${loggedInUser != null ? loggedInUser.email : 'Hoàn Hảo'}">Hoàn Hảo</div>
+                    <div style="color:#757474; font-size:14px;" th:text="${loggedInUser != null ? loggedInUser.role.name : 'Quản trị viên'}">Quản trị viên</div>
                 </div>
             </div>
-            <img class="logout-icon" alt="Đăng xuất" src="https://www.figma.com/api/mcp/asset/befa1fb2-7e00-4aeb-b95f-f1a8a4927d66" />
+            <a href="/logout">
+                <img class="logout-icon" alt="Đăng xuất" src="https://www.figma.com/api/mcp/asset/befa1fb2-7e00-4aeb-b95f-f1a8a4927d66" />
+            </a>
         </div>
     </aside>
 

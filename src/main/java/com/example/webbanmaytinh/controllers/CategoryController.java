@@ -1,7 +1,9 @@
 package com.example.webbanmaytinh.controllers;
 
 import com.example.webbanmaytinh.entity.Category;
+import com.example.webbanmaytinh.entity.User;
 import com.example.webbanmaytinh.service.CategoryService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,14 +20,18 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public String list(Model model) {
+    public String list(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("activeMenu", "categories");
         return "categories/list";
     }
 
     @GetMapping("/new")
-    public String createForm(Model model) {
+    public String createForm(Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
         model.addAttribute("category", new Category());
         model.addAttribute("isEdit", false);
         model.addAttribute("activeMenu", "categories");
@@ -39,7 +45,9 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable String id, Model model) {
+    public String editForm(@PathVariable String id, Model model, HttpSession session) {
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
+        model.addAttribute("loggedInUser", loggedInUser);
         Category category = categoryService.getCategoryByID(id);
         if (category == null) {
             return "redirect:/categories";

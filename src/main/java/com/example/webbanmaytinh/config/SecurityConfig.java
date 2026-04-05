@@ -9,16 +9,27 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+    private final String[] ADMINENPOINT = { "/products/**", "/categories/**" };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests((requests) -> requests
-                .anyRequest().permitAll() // Cho phép tất cả mọi trang (Home, Contact, v.v...)
-            )
-            .csrf(csrf -> csrf.disable()) // Tắt CSRF để dễ test form hơn
-            .headers(headers -> headers.frameOptions(frame -> frame.disable())); // Cho phép map/h2-console nếu có
-        
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/home", "/contact", "/laptop", "/phu-kien", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
+
+                        // Ngăn chặn tất cả các phương thức (GET, POST, PUT, DELETE) vào admin endpoints
+                        // nếu không phải ADMIN
+                        .requestMatchers(ADMINENPOINT).hasRole("ADMIN")
+
+                        .anyRequest().authenticated())
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler((request, response, accessDeniedException) -> {
+                            // Nếu cố gắng truy cập mà không có quyền, chuyển hướng về trang chủ với thông
+                            // báo lỗi
+                            response.sendRedirect("/?error=access_denied");
+                        }))
+                .formLogin(form -> form.disable())
+                .logout(logout -> logout.disable());
         return http.build();
     }
 }
