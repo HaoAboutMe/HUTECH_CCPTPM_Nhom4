@@ -112,4 +112,15 @@ public class ProductController {
         productService.deleteProduct(id);
         return "redirect:/products";
     }
+
+    @GetMapping("/{id}")
+    public String detail(@PathVariable String id, Model model) {
+        Product product = productService.getProductByID(id);
+        if (product == null) {
+            return "redirect:/products";
+        }
+        model.addAttribute("product", product);
+        model.addAttribute("activeMenu", "products");
+        return "products/detail";
+    }
 }

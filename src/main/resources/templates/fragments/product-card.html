@@ -2,7 +2,7 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="productCard(product)">
-    <div class="product-card" th:if="${product != null}">
+    <a th:href="@{/products/{id}(id=${product.id})}" class="product-card" th:if="${product != null}" style="text-decoration: none; color: inherit; display: block;">
         <div class="product-thumb">
             <img class="product-image"
                  alt="Ảnh sản phẩm"
@@ -19,16 +19,16 @@
             <div>
                 <div class="product-old-price"
                      th:if="${product.isDiscounted == true}"
-                     th:text="${product.price + ' VND'}">0 VND</div>
+                     th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</div>
                 <div class="product-price"
                      th:if="${product.isDiscounted == true}"
-                     th:text="${product.finalPrice + ' VND'}">0 VND</div>
+                     th:text="${#numbers.formatDecimal(product.getFinalPrice(), 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</div>
                 <div class="product-price"
                      th:if="${product.isDiscounted != true}"
-                     th:text="${product.price + ' VND'}">0 VND</div>
+                     th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT') + ' VND'}">0 VND</div>
             </div>
         </div>
-    </div>
+    </a>
 </div>
 </body>
 </html>

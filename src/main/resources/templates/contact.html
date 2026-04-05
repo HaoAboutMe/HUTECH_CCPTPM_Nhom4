@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liên hệ - LV Computer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --primary-yellow: #FFC107;
+            --primary-yellow-dark: #d1950d;
+            --bg-light: #f6f6f6;
+            --text-dark: #1f1f1f;
+            --text-muted: #7c7575;
+            --card-bg: #ffffff;
+            --border-color: #d9d9d9;
+            --accent-blue: #308efa;
+            --dark-bg: #0D0D0D;
+            --hero-bg: #F4F7FF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', 'Montserrat', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+
+        /* Header Navigation */
+        header { background: white; border-bottom: 1px solid #f0f0f0; position: sticky; top: 0; z-index: 100; }
+        .navbar { display: flex; align-items: center; justify-content: space-between; padding: 16px 60px; gap: 40px; }
+        .logo { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 18px; text-decoration: none; color: var(--text-dark); }
+        .logo img { width: 44px; height: 44px; }
+        .logo-text { display: flex; align-items: baseline; gap: 4px; }
+        .brand-name { color: var(--primary-yellow-dark); font-weight: 900; font-family: 'Orbitron', sans-serif; }
+        
+        .nav-menu { display: flex; gap: 32px; flex: 1; list-style: none; }
+        .nav-menu a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 16px; transition: color 0.3s; }
+        .nav-menu a:hover { color: var(--primary-yellow-dark); }
+        
+        .header-actions { display: flex; align-items: center; gap: 20px; }
+        .search-box { display: flex; align-items: center; background: #f0f0f0; border-radius: 999px; padding: 6px 14px; gap: 8px; width: 220px; }
+        .search-box img { width: 16px; height: 16px; flex-shrink: 0; display: block; }
+        .search-box input { border: none; background: transparent; outline: none; width: 100%; font-size: 13px; }
+        .icon-btn { width: 24px; height: 24px; cursor: pointer; background: none; border: none; }
+        .icon-btn img { width: 100%; height: 100%; }
+
+        .btn { padding: 14px 32px; border: none; border-radius: 10px; font-weight: 700; font-family: 'Orbitron', sans-serif; cursor: pointer; transition: all 0.3s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 15px; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--primary-yellow-dark) 100%); color: #000; box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0px 6px 40px rgba(0, 0, 0, 0.15); }
+
+        /* Contact Content */
+        .contact-container { padding: 60px; background: var(--hero-bg); min-height: 80vh; }
+        .breadcrumb { margin-bottom: 30px; font-size: 14px; color: var(--text-muted); }
+        .breadcrumb a { color: var(--text-muted); text-decoration: none; }
+        .breadcrumb .accent { color: var(--primary-yellow-dark); font-weight: 600; }
+        
+        .contact-title { font-family: 'Orbitron', sans-serif; font-size: 48px; font-weight: 900; margin-bottom: 40px; color: var(--text-dark); line-height: 1.1; }
+        .contact-title .accent { color: var(--primary-yellow); }
+
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start; }
+        
+        .contact-info-panel { display: flex; flex-direction: column; gap: 24px; }
+        .info-card { background: white; padding: 30px; border-radius: 12px; display: flex; align-items: center; gap: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: transform 0.3s; }
+        .info-card:hover { transform: scale(1.02); }
+        .info-icon { width: 60px; height: 60px; background: var(--primary-yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+        .info-details h3 { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+        .info-details p { font-size: 15px; color: var(--text-muted); line-height: 1.4; }
+
+        .map-wrapper { width: 100%; height: 350px; border-radius: 15px; overflow: hidden; margin-top: 20px; border: 1px solid var(--border-color); }
+
+        /* Form Styling */
+        .contact-form-wrapper { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 15px 50px rgba(0,0,0,0.08); }
+        .form-header { margin-bottom: 32px; }
+        .form-header h2 { font-family: 'Montserrat', sans-serif; font-size: 24px; font-weight: 700; color: var(--text-dark); }
+        .form-header p { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+
+        .form-group { margin-bottom: 24px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text-dark); text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-input { width: 100%; padding: 14px 18px; border: 1px solid #e2e8f0; border-radius: 10px; font-family: 'Roboto', sans-serif; background: #f8fafc; transition: all 0.3s; font-size: 15px; }
+        .form-input:focus { outline: none; border-color: var(--primary-yellow); background: white; box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.1); }
+        textarea.form-input { resize: vertical; min-height: 120px; }
+
+        /* Partners Bar */
+        .partners-section { background: var(--primary-yellow); padding: 40px 60px; margin-top: 60px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; color: #000; }
+        .partners-text h3 { font-family: 'Orbitron', sans-serif; font-size: 22px; font-weight: 900; }
+        .partners-logos { display: flex; gap: 40px; font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 26px; font-style: italic; opacity: 0.7; }
+
+        /* Footer */
+        footer { background: var(--dark-bg); color: white; margin-top: 60px; }
+        .footer-content { display: grid; grid-template-columns: auto 1fr; gap: 60px; padding: 50px 60px; }
+        .footer-brand { display: flex; align-items: center; gap: 16px; }
+        .footer-brand img { width: 52px; height: 52px; border-radius: 50%; }
+        .footer-brand-text { font-weight: 700; }
+        .brand-lv { color: white; }
+        .brand-computer { color: var(--primary-yellow); }
+        .footer-sections { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; }
+        .footer-section h4 { font-family: 'Roboto', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 20px; }
+        .footer-section a, .footer-section p { font-size: 16px; color: #ccc; text-decoration: none; line-height: 1.8; }
+        .footer-section .phone { color: var(--accent-blue); font-weight: 700; }
+        .footer-bottom { border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 20px 60px; text-align: center; font-size: 14px; color: #999; }
+
+        /* Mobile specific */
+        @media (max-width: 768px) {
+            header { background: var(--dark-bg); color: white; }
+            .navbar { display: grid !important; grid-template-columns: 40px 1fr 40px; grid-template-areas: "menu logo cart" "search search search"; gap: 16px; padding: 16px; align-items: center; }
+            .logo { grid-area: logo; justify-content: center; color: white !important; }
+            .logo .brand-name { color: var(--primary-yellow) !important; }
+            .nav-menu, .header-actions > .btn { display: none; }
+            .header-actions { display: contents; }
+            .search-box { grid-area: search; width: 100%; background: white; border-radius: 8px; padding: 0 0 0 12px; height: 48px; }
+            .search-box input { color: #333; font-size: 14px; }
+            .search-btn-mobile { display: flex !important; background: var(--primary-yellow); border: none; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 0 8px 8px 0; }
+            .icon-btn { filter: invert(1); }
+
+            .contact-container { padding: 40px 20px; }
+            .contact-title { font-size: 32px; }
+            .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .partners-section { flex-direction: column; gap: 20px; text-align: center; padding: 30px 20px; }
+            .partners-logos { gap: 20px; font-size: 20px; }
+            .footer-content { grid-template-columns: 1fr; padding: 40px 20px; text-align: center; }
+            .footer-brand { justify-content: center; margin-bottom: 30px; }
+            .footer-sections { grid-template-columns: 1fr; gap: 30px; }
+        }
+        .search-btn-mobile { display: none; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <a href="home.html" th:href="@{/}" class="logo">
+                <img src="https://www.figma.com/api/mcp/asset/15f6d051-0d66-4e65-9fd9-df9f8ca75d16" alt="LV Computer" />
+                <span class="logo-text">
+                    <span class="brand-name">LV</span>
+                    <span>COMPUTER</span>
+                </span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="home.html" th:href="@{/}">Xây dựng PC</a></li>
+                <li><a href="home.html" th:href="@{/}">Danh mục</a></li>
+                <li><a href="contact.html" th:href="@{/contact}">Liên hệ</a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="search-box">
+                    <img src="https://www.figma.com/api/mcp/asset/faa3115f-8fb1-4e74-b955-dab29f26aa79" alt="Search" />
+                    <input type="text" placeholder="Tìm kiếm..." />
+                    <button class="search-btn-mobile">
+                        <img src="https://www.figma.com/api/mcp/asset/faa3115f-8fb1-4e74-b955-dab29f26aa79" alt="Search" style="filter: brightness(0); width: 20px; height: 20px;" />
+                    </button>
+                </div>
+                <button class="icon-btn"><img src="https://www.figma.com/api/mcp/asset/a04fa0d4-5421-42e4-b81a-dc8c4e4ca63f" alt="Cart" /></button>
+                <button class="icon-btn"><img src="https://www.figma.com/api/mcp/asset/254cb508-1157-4ba8-9f04-d8d33bd96180" alt="Menu" /></button>
+                <a href="/" class="btn btn-primary" style="margin: 0; padding: 10px 18px; font-size: 12px;">Đăng nhập</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="contact-container">
+        <div class="breadcrumb">
+            <a href="home.html" th:href="@{/}">Trang chủ</a> / <span class="accent">Liên hệ</span>
+        </div>
+
+        <h1 class="contact-title">LIÊN HỆ VỚI <span class="accent">CHÚNG TÔI</span></h1>
+
+        <div class="contact-grid">
+            <div class="contact-info-panel">
+                <div class="info-card">
+                    <div class="info-icon">📞</div>
+                    <div class="info-details">
+                        <h3>Hotline</h3>
+                        <p>078.971.6419</p>
+                        <p>079.34.867.05</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <div class="info-details">
+                        <h3>Showroom</h3>
+                        <p>232, QL50, TT. Cần Giuộc, Tỉnh Long An</p>
+                    </div>
+                </div>
+
+                <div class="map-wrapper">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3921.25875239922!2d106.6669!3d10.5894!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDM1JzIyLjAiTiAxMDbCsDQwJzAwLjgiRQ!5e0!3m2!1svi!2s" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+
+            <div class="contact-form-wrapper">
+                <div class="form-header">
+                    <h2>Gửi lời nhắn cho chúng tôi</h2>
+                    <p>Chúng tôi sẽ phản hồi lại bạn sớm nhất có thể.</p>
+                </div>
+                <form action="#" method="POST">
+                    <div class="form-group">
+                        <label>Họ và tên</label>
+                        <input type="text" class="form-input" placeholder="Ví dụ: Nguyễn Văn A" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ Email</label>
+                        <input type="email" class="form-input" placeholder="email@gmail.com" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại</label>
+                        <input type="tel" class="form-input" placeholder="+84 XXX XXX XXX" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Lời nhắn</label>
+                        <textarea class="form-input" placeholder="Hãy cho chúng tôi biết bạn đang tìm kiếm điều gì..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; height: 52px; font-size: 16px; margin-top: 10px;">GỬI TIN NHẮN</button>
+                    <p style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 16px;">Bằng việc gửi biểu mẫu này, bạn đồng ý với Chính sách bảo mật và Điều khoản dịch vụ của chúng tôi.</p>
+                </form>
+            </div>
+        </div>
+
+        <div class="partners-section">
+            <div class="partners-text">
+                <h3>Đối tác tin cậy của chúng tôi</h3>
+                <p style="font-size: 14px; opacity: 0.8;">Kiến tạo sự xuất sắc cùng những thương hiệu công nghệ hàng đầu thế giới.</p>
+            </div>
+            <div class="partners-logos">
+                <span>NVIDIA</span>
+                <span>INTEL</span>
+                <span>AMD</span>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="https://www.figma.com/api/mcp/asset/15f6d051-0d66-4e65-9fd9-df9f8ca75d16" alt="LV Computer" />
+                <div class="footer-brand-text">
+                    <div><span class="brand-lv">LV</span> <span class="brand-computer">COMPUTER</span></div>
+                    <p style="font-size: 12px; color: #999; margin-top: 4px;">Chuyên lắp ráp máy tính cao cấp<br/>Xây dựng gaming house hoàn hảo</p>
+                </div>
+            </div>
+            <div class="footer-sections">
+                <div class="footer-section">
+                    <h4>Sản phẩm</h4>
+                    <a href="/">PC Gaming</a><br>
+                    <a href="/">Workstation</a><br>
+                    <a href="/">Gaming Gear</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Thông tin</h4>
+                    <a href="/">Hướng dẫn mua hàng</a><br>
+                    <a href="/">Hướng dẫn thanh toán</a><br>
+                    <a href="/">Hướng dẫn trả góp</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Hỗ trợ</h4>
+                    <p>Mua hàng: <span class="phone">078 971 6419</span></p>
+                    <p>Bảo hành: <span class="phone">078 971 6419</span></p>
+                    <p>Email: <span class="phone">lvcomputervn@gmail.com</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 LV COMPUTER. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+</body>
+</html>

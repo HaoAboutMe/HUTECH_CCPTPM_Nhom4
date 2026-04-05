@@ -9,14 +9,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
     private final String[] ADMINENPOINT = { "/products/**", "/categories/**" };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/home", "/laptop", "/phu-kien", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/home", "/contact", "/laptop", "/phu-kien", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
 
                         // Ngăn chặn tất cả các phương thức (GET, POST, PUT, DELETE) vào admin endpoints
                         // nếu không phải ADMIN
@@ -31,7 +30,6 @@ public class SecurityConfig {
                         }))
                 .formLogin(form -> form.disable())
                 .logout(logout -> logout.disable());
-
         return http.build();
     }
 }

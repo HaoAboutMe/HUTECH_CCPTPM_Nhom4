@@ -54,6 +54,13 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @GetMapping("/contact")
+    public String contact(Model model) {
+        model.addAttribute("activeMenu", "contact");
+        return "contact";
+    }
+}
+
     @GetMapping("/laptop")
     public String laptopPage(Model model, HttpSession session) {
         User loggedInUser = (User) session.getAttribute("loggedInUser");
