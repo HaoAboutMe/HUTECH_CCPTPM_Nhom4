@@ -15,7 +15,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/home", "/contact", "/laptop", "/phu-kien", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
+                .requestMatchers("/", "/home", "/contact", "/laptop", "/pc-build", "/phu-kien", "/register", "/login", "/logout", "/css/**", "/js/**", "/images/**").permitAll()
 
                         // Ngăn chặn tất cả các phương thức (GET, POST, PUT, DELETE) vào admin endpoints
                         // nếu không phải ADMIN
