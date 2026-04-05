@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LV Computer - Website bán máy tính</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Montserrat:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet" />
     <style>
         :root {
-            --primary-yellow: #fde047;
+            --primary-yellow: #FFC107;
             --primary-yellow-dark: #d1950d;
             --bg-light: #f6f6f6;
             --text-dark: #1f1f1f;
@@ -15,13 +18,14 @@
             --card-bg: #ffffff;
             --border-color: #d9d9d9;
             --accent-blue: #308efa;
-            --dark-bg: #111827;
+            --dark-bg: #0D0D0D;
+            --hero-bg: #F4F7FF;
         }
 
-        * { 
+        * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box; 
+            box-sizing: border-box;
         }
 
         html {
@@ -123,8 +127,8 @@
         }
 
         .search-box img {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             flex-shrink: 0;
             object-fit: contain;
             display: block;
@@ -509,6 +513,7 @@
             height: 40px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
+            line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
@@ -703,45 +708,225 @@
 
         /* Responsive */
         @media (max-width: 1024px) {
-            .categories-grid { grid-template-columns: repeat(2, 1fr); }
-            .products-grid { grid-template-columns: repeat(3, 1fr); }
-            .features-container { grid-template-columns: repeat(2, 1fr); }
-            .hero { grid-template-columns: 1fr; padding: 40px; }
-            .navbar { padding: 16px 40px; gap: 20px; }
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .features-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 40px;
+            }
+
+            .navbar {
+                padding: 16px 40px;
+                gap: 20px;
+            }
         }
 
         @media (max-width: 768px) {
-            .navbar { flex-direction: column; gap: 12px; padding: 16px; }
-            .nav-menu { gap: 16px; flex-wrap: wrap; }
-            .search-box { width: 100%; }
-            .hero { padding: 30px; }
-            .hero-title { font-size: 32px; }
-            .hero-buttons { flex-direction: column; }
-            .categories-grid { grid-template-columns: 1fr; }
-            .products-grid { grid-template-columns: repeat(2, 1fr); }
-            .features-container { grid-template-columns: 1fr; }
-            .footer-sections { grid-template-columns: 1fr; }
-            .categories-section, .products-section, .all-products-section, .features-section { padding: 40px; }
-            .all-products-header h2 { font-size: 24px; }
+            header {
+                background: var(--dark-bg);
+                color: white;
+            }
+
+            .header-top {
+                display: none;
+            }
+
+            .navbar {
+                display: grid !important;
+                grid-template-columns: 40px 1fr 40px;
+                grid-template-areas:
+                    "menu logo cart"
+                    "search search search";
+                gap: 16px;
+                padding: 16px;
+                align-items: center;
+            }
+
+            .logo {
+                grid-area: logo;
+                justify-content: center;
+            }
+
+            .logo .logo-text {
+                color: white;
+            }
+
+            .nav-menu,
+            .header-actions>.btn {
+                display: none;
+            }
+
+            .header-actions {
+                display: contents;
+            }
+
+            .search-box {
+                grid-area: search;
+                width: 100%;
+                background: white;
+                border-radius: 8px;
+                padding: 0 0 0 12px;
+                height: 48px;
+            }
+
+            .search-box input {
+                color: #333;
+                font-size: 14px;
+            }
+
+            .search-btn-mobile {
+                display: flex !important;
+                background: var(--primary-yellow);
+                border: none;
+                width: 48px;
+                height: 48px;
+                align-items: center;
+                justify-content: center;
+                border-radius: 0 8px 8px 0;
+                cursor: pointer;
+            }
+
+            .cart-btn {
+                grid-area: cart;
+                order: 3;
+                filter: invert(1);
+            }
+
+            .menu-btn {
+                grid-area: menu;
+                order: 1;
+                filter: invert(1);
+            }
+
+            .hero {
+                background: var(--hero-bg);
+                padding: 40px 20px;
+                text-align: left;
+                display: flex;
+                flex-direction: column-reverse;
+                /* Image below or above? Figma says to the right/below */
+                gap: 30px;
+            }
+
+            .hero-title {
+                font-size: 32px;
+                line-height: 1.1;
+            }
+
+            .hero-buttons {
+                flex-direction: row;
+                gap: 12px;
+            }
+
+            .hero-buttons .btn {
+                width: 50%;
+                font-size: 12px;
+                padding: 12px 10px;
+            }
+
+            .categories-section {
+                padding: 40px 20px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+
+            .category-card {
+                height: 160px;
+            }
+
+            .category-card-title {
+                font-size: 14px;
+                margin-bottom: 4px;
+            }
+
+            .category-card-action {
+                font-size: 12px;
+            }
+
+            .products-section,
+            .all-products-section {
+                padding: 40px 20px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .features-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+                text-align: center;
+            }
+
+            .footer-brand {
+                justify-content: center;
+                margin-bottom: 30px;
+            }
+
+            .footer-sections {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
-            .products-grid { grid-template-columns: 1fr; }
-            .header-top { padding: 8px 16px; font-size: 12px; }
-            .navbar { padding: 12px 16px; }
-            .hero { padding: 20px; }
-            .hero-title { font-size: 24px; }
-            .section-header h2 { font-size: 24px; }
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-header h2 {
+                font-size: 24px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Keep 2 columns as per Figma */
         }
+
+        .search-btn-mobile {
+            display: none;
+        }
+
+        /* Default hidden on desktop */
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header>
         <div class="header-top">ĐỒNG VUA TRỊ GIÁ ⚡ NÂNG CẤP, ƯU ĐÃI 💥</div>
-        
+
         <nav class="navbar">
-            <a href="/" class="logo">
+            <a href="/" th:href="@{/}" class="logo">
                 <img src="https://www.figma.com/api/mcp/asset/15f6d051-0d66-4e65-9fd9-df9f8ca75d16" alt="LV Computer" />
                 <span class="logo-text">
                     <span class="brand-name">LV</span>
@@ -750,23 +935,28 @@
             </a>
 
             <ul class="nav-menu">
-                <li><a href="/">Xây dựng PC</a></li>
-                <li><a href="/">Danh mục</a></li>
-                <li><a href="/">Liên hệ</a></li>
+                <li><a href="home.html" th:href="@{/}">Xây dựng PC</a></li>
+                <li><a href="home.html" th:href="@{/}">Danh mục</a></li>
+                <li><a href="contact.html" th:href="@{/contact}">Liên hệ</a></li>
             </ul>
 
             <div class="header-actions">
                 <div class="search-box">
                     <img src="https://www.figma.com/api/mcp/asset/faa3115f-8fb1-4e74-b955-dab29f26aa79" alt="Search" />
                     <input type="text" placeholder="Tìm kiếm..." />
+                    <button class="search-btn-mobile">
+                        <img src="https://www.figma.com/api/mcp/asset/faa3115f-8fb1-4e74-b955-dab29f26aa79" alt="Search"
+                            style="filter: brightness(0); width: 20px; height: 20px;" />
+                    </button>
                 </div>
-                <button class="icon-btn">
+                <button class="icon-btn cart-btn">
                     <img src="https://www.figma.com/api/mcp/asset/a04fa0d4-5421-42e4-b81a-dc8c4e4ca63f" alt="Cart" />
                 </button>
-                <button class="icon-btn">
-                    <img src="https://www.figma.com/api/mcp/asset/254cb508-1157-4ba8-9f04-d8d33bd96180" alt="Menu" />
+                <button class="icon-btn menu-btn">
+                    <img src="https://www.figma.coXm/api/mcp/asset/254cb508-1157-4ba8-9f04-d8d33bd96180" alt="Menu" />
                 </button>
-                <a href="/" class="btn btn-primary" style="margin: 0; padding: 10px 18px; font-size: 12px;">Đăng nhập</a>
+                <a href="/" class="btn btn-primary" style="margin: 0; padding: 10px 18px; font-size: 12px;">Đăng
+                    nhập</a>
             </div>
         </nav>
     </header>
@@ -810,7 +1000,8 @@
 
         <div class="categories-grid">
             <a href="#all-products" class="category-card">
-                <img src="https://www.figma.com/api/mcp/asset/ce768aa8-3fe1-4f37-9f45-500585c43780" alt="Laptop Gaming" />
+                <img src="https://www.figma.com/api/mcp/asset/ce768aa8-3fe1-4f37-9f45-500585c43780"
+                    alt="Laptop Gaming" />
                 <div class="category-card-overlay">
                     <h3 class="category-card-title">Laptop Gaming</h3>
                     <div class="category-card-action">
@@ -821,7 +1012,8 @@
             </a>
 
             <a href="#all-products" class="category-card">
-                <img src="https://www.figma.com/api/mcp/asset/725e68ee-dcab-4213-981b-0c04f9cd0fb0" alt="Máy Tính Bàn" />
+                <img src="https://www.figma.com/api/mcp/asset/725e68ee-dcab-4213-981b-0c04f9cd0fb0"
+                    alt="Máy Tính Bàn" />
                 <div class="category-card-overlay">
                     <h3 class="category-card-title">Máy Tính Bàn</h3>
                     <div class="category-card-action">
@@ -848,7 +1040,7 @@
     <section class="products-section" id="discounted-products">
         <div class="section-header-with-link">
             <div class="section-title-group">
-                <h2>Sản phẩm <span class="accent">GIẢM GIÁ</span></h2>
+                <h2>Sản phẩm <span class="accent">NỔI BẬT</span></h2>
                 <p>Chỉ hiển thị các sản phẩm đang giảm giá.</p>
             </div>
         </div>
@@ -867,8 +1059,9 @@
     <!-- All Products Section -->
     <section class="all-products-section" id="all-products">
         <div class="all-products-header">
-            <h2>TấT Cả SảN <span class="accent">PHẩM</span></h2>
-            <p th:if="${allProducts != null && !#lists.isEmpty(allProducts)}" th:text="${'Hiển thị ' + #lists.size(allProducts) + ' sản phẩm'}">Hiển thị 0 sản phẩm</p>
+            <h2>TẤT CẢ <span class="accent">SẢN PHẨM</span></h2>
+            <p th:if="${allProducts != null && !#lists.isEmpty(allProducts)}"
+                th:text="${'Hiển thị ' + #lists.size(allProducts) + ' sản phẩm'}">Hiển thị 0 sản phẩm</p>
         </div>
 
         <div th:if="${allProducts == null || #lists.isEmpty(allProducts)}" class="empty-message">
@@ -918,7 +1111,8 @@
                 <img src="https://www.figma.com/api/mcp/asset/15f6d051-0d66-4e65-9fd9-df9f8ca75d16" alt="LV Computer" />
                 <div class="footer-brand-text">
                     <div><span class="brand-lv">LV</span> <span class="brand-computer">COMPUTER</span></div>
-                    <p style="font-size: 12px; color: #999; margin-top: 4px;">Chuyên lắp ráp máy tính cao cấp<br/>Xây dựng gaming house hoàn hảo</p>
+                    <p style="font-size: 12px; color: #999; margin-top: 4px;">Chuyên lắp ráp máy tính cao cấp<br />Xây
+                        dựng gaming house hoàn hảo</p>
                 </div>
             </div>
 
@@ -957,5 +1151,5 @@
     </footer>
 
 </body>
-</html>
 
+</html>
