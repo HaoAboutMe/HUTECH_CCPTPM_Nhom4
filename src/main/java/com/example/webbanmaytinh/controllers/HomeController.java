@@ -46,5 +46,11 @@ public class HomeController {
     public String homeAlias() {
         return "redirect:/";
     }
+
+    @GetMapping("/contact")
+    public String contact(Model model) {
+        model.addAttribute("activeMenu", "contact");
+        return "contact";
+    }
 }
 
