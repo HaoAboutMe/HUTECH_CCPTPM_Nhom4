@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý danh mục</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #f6f6f6;
+            --card: #ffffff;
+            --border: #d9d9d9;
+            --muted: #7c7575;
+            --text: #1f1f1f;
+            --accent: #fde047;
+            --accent-dark: #a47a07;
+            --sidebar: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Cabin", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 429px;
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            padding: 24px 24px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: #f3b11b;
+        }
+
+        .brand img {
+            width: 42px;
+            height: 42px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            color: #9c9c9c;
+            letter-spacing: 1px;
+            font-weight: 700;
+            margin: 18px 0 6px;
+        }
+
+        .nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: #757474;
+            padding: 12px 14px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+        }
+
+        .nav a img {
+            width: 22px;
+            height: 22px;
+        }
+
+        .nav a.active {
+            background: #fff6c6;
+            color: #c48a00;
+            font-weight: 700;
+            border-left: 6px solid #fde047;
+            padding-left: 8px;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile img {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+        }
+
+        .logout-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .main {
+            flex: 1;
+            padding: 22px 28px 32px;
+        }
+
+        .page-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .page-title {
+            font-family: "Inter", sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .page-subtitle {
+            color: #5b5b5b;
+            margin-top: 6px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--accent) 30%, var(--accent-dark) 100%);
+            color: #1f1f1f;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .table-card {
+            margin-top: 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .table-head {
+            background: #d9d9d9;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            padding: 16px 18px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 10px;
+            padding: 16px 18px;
+            border-bottom: 1px solid #efefef;
+            align-items: center;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            border: 1px solid #e1dada;
+            background: #ffffff;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 12px;
+            color: #5d5d5d;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .action-danger {
+            color: #b91c1c;
+            border-color: #f3b6b6;
+        }
+
+        @media (max-width: 980px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+
+            .main {
+                padding: 20px;
+            }
+
+            .page-head {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="brand">
+            <img alt="LV" src="https://www.figma.com/api/mcp/asset/019fd834-650d-4122-9e55-a71ea3250fc9" />
+            <span>LV ADMIN</span>
+        </div>
+
+        <div>
+            <div class="section-title">QUẢN LÝ</div>
+            <nav class="nav">
+                <a th:href="@{/dashboard}">
+                    <img alt="Bảng điều khiển" src="https://www.figma.com/api/mcp/asset/c7123bf9-e5d6-4295-87d2-8abc95229134" />
+                    Bảng điều khiển
+                </a>
+                <a th:href="@{/products}">
+                    <img alt="Quản lý sản phẩm" src="https://www.figma.com/api/mcp/asset/a36cb554-d07c-4c5c-9e6e-b4a09ab8e160" />
+                    Quản lý sản phẩm
+                </a>
+                <a class="active" th:href="@{/categories}">
+                    <img alt="Quản lý danh mục" src="https://www.figma.com/api/mcp/asset/a36cb554-d07c-4c5c-9e6e-b4a09ab8e160" />
+                    Quản lý danh mục
+                </a>
+                <a href="#">
+                    <img alt="Đơn hàng" src="https://www.figma.com/api/mcp/asset/abbede67-f4e0-4c18-8387-30bf20f40c11" />
+                    Đơn hàng
+                </a>
+                <a href="#">
+                    <img alt="Người dùng" src="https://www.figma.com/api/mcp/asset/95279d86-7b85-4811-af33-e408d1a56920" />
+                    Người dùng
+                </a>
+                <a href="#">
+                    <img alt="Vouchers" src="https://www.figma.com/api/mcp/asset/79353be3-8145-423a-86d9-beecf49b73e5" />
+                    Vouchers và khuyến mãi
+                </a>
+            </nav>
+        </div>
+
+        <div>
+            <div class="section-title">HỆ THỐNG</div>
+            <nav class="nav">
+                <a href="#">
+                    <img alt="Báo cáo" src="https://www.figma.com/api/mcp/asset/1a80e619-78e6-49fc-b1ff-356e262eca78" />
+                    Báo cáo
+                </a>
+                <a href="#">
+                    <img alt="Cài đặt" src="https://www.figma.com/api/mcp/asset/42e42313-4a07-47cb-b0c6-9c370db57c5e" />
+                    Cài đặt
+                </a>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="profile">
+                <img alt="User profile" src="https://www.figma.com/api/mcp/asset/63a3f214-6dd6-4ecf-a87b-a65df00bbe35" />
+                <div>
+                    <div style="font-weight:700;" th:text="${loggedInUser != null ? loggedInUser.email : 'Hoàn Hảo'}">Hoàn Hảo</div>
+                    <div style="color:#757474; font-size:14px;" th:text="${loggedInUser != null ? loggedInUser.role.name : 'Quản trị viên'}">Quản trị viên</div>
+                </div>
+            </div>
+            <a href="/logout">
+                <img class="logout-icon" alt="Đăng xuất" src="https://www.figma.com/api/mcp/asset/befa1fb2-7e00-4aeb-b95f-f1a8a4927d66" />
+            </a>
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="page-head">
+            <div>
+                <div class="page-title">Quản lý danh mục</div>
+                <div class="page-subtitle">Quản lý danh mục sản phẩm trong hệ thống.</div>
+            </div>
+            <a class="btn-primary" th:href="@{/categories/new}">Thêm danh mục mới</a>
+        </div>
+
+        <div class="table-card">
+            <div class="table-head">
+                <div>TÊN DANH MỤC</div>
+                <div>HÀNH ĐỘNG</div>
+            </div>
+            <div th:if="${#lists.isEmpty(categories)}" class="table-row">
+                <div>Chưa có danh mục nào trong danh sách</div>
+                <div></div>
+            </div>
+            <div class="table-row" th:each="category : ${categories}">
+                <div th:text="${category.name}">Tên danh mục</div>
+                <div class="actions">
+                    <a class="action-btn" th:href="@{/categories/{id}/edit(id=${category.id})}">Sửa</a>
+                    <form th:action="@{/categories/{id}/delete(id=${category.id})}" method="post">
+                        <button class="action-btn action-danger" type="submit">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
